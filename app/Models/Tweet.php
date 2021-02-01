@@ -33,6 +33,7 @@ class Tweet extends Model
         return $this->hasMany(Comment::class);
     }
     
+    //ここからDBの詳細なやり取りで必要なクラス作成
     public function getUserTimeLine(Int $user_id)
     {
         return $this->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(50);
@@ -41,5 +42,29 @@ class Tweet extends Model
     public function getTweetCount(Int $user_id)
     {
         return $this->where('user_id', $user_id)->count();
+    }
+    
+    // 一覧画面 Follower.phpの（$follow_ids)
+    public function getTimeLines(Int $user_id, Array $follow_ids)
+    {
+        // 自身とフォローしているユーザIDを結合する
+        $follow_ids[] = $user_id;
+        return $this->whereIn('user_id', $follow_ids)->orderBy('created_at', 'DESC')->paginate(50);
+    }
+    
+    // tweetsの詳細画面ツイート情報を取得
+    public function getTweet(Int $tweet_id)
+    {
+        return $this->with('user')->where('id', $tweet_id)->first();
+    }
+    
+    //createしたTweetsの情報を保存する（バリデーション通った前提）
+    public function tweetStore(Int $user_id, Array $data)
+    {
+        $this->user_id = $user_id;
+        $this->text = $data['text'];
+        $this->save();
+
+        return;
     }
 }

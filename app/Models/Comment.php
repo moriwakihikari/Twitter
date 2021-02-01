@@ -22,4 +22,10 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    //Twttt.phpのgetTweet()で取得し紐づいたコメントを取得
+    public function getComments(Int $tweet_id)
+    {
+        return $this->with('user')->where('tweet_id', $tweet_id)->get();
+    }
 }
