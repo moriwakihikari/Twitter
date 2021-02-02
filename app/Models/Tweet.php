@@ -64,7 +64,29 @@ class Tweet extends Model
         $this->user_id = $user_id;
         $this->text = $data['text'];
         $this->save();
-
+        
         return;
+    }
+    
+    //編集情報ユーザーIDとツイートIDで変更
+    public function getEditTweet(Int $user_id, Int $tweet_id)
+    {
+        return $this->where('user_id', $user_id)->where('id', $tweet_id)->first();
+    }
+    
+    //update
+    public function tweetUpdate(Int $tweet_id, Array $data)
+    {
+        $this->id = $tweet_id;
+        $this->text = $data['text'];
+        $this->update();
+        
+        return;
+    }
+    
+    //削除ユーザーとツイートのid
+    public function tweetDestroy(Int $user_id, Int $tweet_id)
+    {
+        return $this->where('user_id', $user_id)->where('id', $tweet_id)->delete();
     }
 }
