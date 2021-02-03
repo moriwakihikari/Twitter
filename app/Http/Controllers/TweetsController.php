@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Tweet;
 use App\Models\Comment;
 use App\Models\Follower;
+use Storage;
 
 class TweetsController extends Controller
 {

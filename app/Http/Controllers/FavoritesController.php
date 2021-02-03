@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorite;
+use Storage;
 
 class FavoritesController extends Controller
 {
