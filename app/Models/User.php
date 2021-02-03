@@ -68,13 +68,8 @@ class User extends Authenticatable
         if (isset($params['profile_image'])) {
             //$file_name = $params['profile_image']->store('public/profile_image/');
             $file = $params['profile_image'];
-            $file_name = Storage::disk('s3')->putFile('/',$file,'public');
-            
-            // $path = $request->file('image')->store('public/image');
-            // $news->image_path = basename($path);
-            
-            // $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
-            // $news->image_path = Storage::disk('s3')->url($path);
+            $path = Storage::disk('s3')->putFile('/icon_images', $file, 'public');
+            $data->profile_image = Storage::disk('s3')->url($path);
             
             $this::where('id', $this->id)
                 ->update([
